@@ -1,0 +1,13 @@
+version: '3.6'
+
+services:
+  # backend
+  ameliorate_backend:
+    container_name: ameliorate_backend
+    build: ./
+    command: npm start
+    working_dir: /usr/src/ameliorate
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./:/usr/src/ameliorate

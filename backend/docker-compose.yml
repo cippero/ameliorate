@@ -21,6 +21,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ameliorate-docker
       POSTGRES_HOST: postgres
-    build: ./
+    build: ./postgres
     ports:
     - '5432:5432'

@@ -3,20 +3,26 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const bodyParser            = require('body-parser');
 const morgan                = require('morgan');
 const cors                  = require('cors');
+const knex                  = require('knex');
 const app                   = express();
+
+const db = knex({
+	client: 'pg',
+	connection: process.env.POSTGRES_URI
+});
 
 // GraphQL/Apollo ////////////////////////////////////////////////
 const typeDefs = gql`
 	type Query {
-        hello: String,
-        five: Int
+		hello: String,
+		five: Int
 	}
 `;
 
 const resolvers = {
 	Query: {
-        hello: () => 'Hello world!',
-        five: () => 5
+		hello: () => 'Hello world!',
+		five: () => 5
 	}
 };
 
@@ -34,7 +40,7 @@ app.get('/', (req, res) => { res.send('Helloooooo')});
 // Port Setup ////////////////////////////////////////////////////
 const port = 8080;
 app.listen(process.env.PORT || port, () =>
-    console.log(`🚀 Server ready at http://localhost:${process.env.PORT || port}. Access GraphQL at http://localhost:${process.env.PORT || port}${server.graphqlPath}`)
+	console.log(`🚀 Server ready at http://localhost:${process.env.PORT || port}. Access GraphQL at http://localhost:${process.env.PORT || port}${server.graphqlPath}`)
 );
 
 

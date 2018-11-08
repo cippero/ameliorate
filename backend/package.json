@@ -21,6 +21,8 @@
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "graphql": "^14.0.2",
+    "knex": "^0.15.2",
+    "pg": "^7.4.0",
     "morgan": "^1.9.1"
   },
   "devDependencies": {

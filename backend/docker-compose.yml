@@ -7,7 +7,20 @@ services:
     build: ./
     command: npm start
     working_dir: /usr/src/ameliorate
+    environment:
+      POSTGRES_URI: ${POSTGRES_URI}
     ports:
       - '8080:8080'
     volumes:
       - ./:/usr/src/ameliorate
+
+  # postgres db
+  postgres:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ameliorate-docker
+      POSTGRES_HOST: postgres
+    build: ./
+    ports:
+    - '5432:5432'

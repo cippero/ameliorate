@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "dev": "babel-watch server.js"
+    "dev": "babel-watch server.js",
+    "test": "echo 'temp test'"
   },
   "keywords": [],
   "author": "",

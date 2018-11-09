@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/frontend
+    working_directory: $CIRCLE_WORKING_DIRECTORY/frontend
     docker:
       - image: circleci/node:8.12.0
     steps:

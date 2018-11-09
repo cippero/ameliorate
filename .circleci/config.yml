@@ -1,23 +1,7 @@
 version: 2
 jobs:
-  # frontend:
-  #   working_directory: ~/ameliorate/frontend
-  #   docker:
-  #     - image: circleci/node:8.12.0
-  #   steps:
-  #     - checkout: 
-  #         path: ~/ameliorate
-  #     - run:
-  #         name: Setup Dependencies
-  #         command: npm i
-  #     - run:
-  #         name: Run Tests
-  #         command: npm test
-  #     - run:
-  #         name: Run Tests Coverage
-  #         command: npm test -- --coverage
-  backend:
-    working_directory: ~/ameliorate/backend
+  frontend:
+    working_directory: ~/ameliorate/frontend
     docker:
       - image: circleci/node:8.12.0
     steps:
@@ -29,6 +13,22 @@ jobs:
       - run:
           name: Run Tests
           command: npm test
+      - run:
+          name: Run Tests Coverage
+          command: npm test -- --coverage
+  # backend:
+  #   working_directory: ~/ameliorate/backend
+  #   docker:
+  #     - image: circleci/node:8.12.0
+  #   steps:
+  #     - checkout: 
+  #         path: ~/ameliorate
+  #     - run:
+  #         name: Setup Dependencies
+  #         command: npm i
+  #     - run:
+  #         name: Run Tests
+  #         command: npm test
 # workflows:
 #   version: 2
 #   build_test_and_lint:

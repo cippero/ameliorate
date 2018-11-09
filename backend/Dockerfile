@@ -4,6 +4,6 @@ WORKDIR /usr/src/ameliorate
 
 COPY ./ ./
 
-RUN npm i
+RUN npm i --silent
 
 CMD ["/bin/bash"]

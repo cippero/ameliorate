@@ -1,11 +1,12 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/project/frontend
+    working_directory: ~/ameliorate/frontend
     docker:
       - image: circleci/node:8.12.0
     steps:
-      - checkout
+      - checkout: 
+          path: ~/ameliorate
       - run: # echo "NPM installing" 
           name: Setup Dependencies
           command: npm i

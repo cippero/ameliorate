@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   # backend
-  ameliorate_backend:
+  api:
     container_name: ameliorate_backend
     build: ./
     command: npm start

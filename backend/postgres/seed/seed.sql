@@ -29,3 +29,17 @@ INSERT into users (id, fname, lname, email, joined) VALUES
     (26, 'Lakita', 'Murillo', 'z@z.com', '2008-7-19');
 
 COMMIT;
+
+
+BEGIN TRANSACTION;
+
+INSERT INTO stats 
+(userID, entryDate, waterIntake, weightPounds, sleepAmount, sleepQuality, exerciseType, exerciseLength, exerciseIntensity, overallFeeling) 
+VALUES
+    (1, '2017-3-12', 8, 150, 7, 5, 'biking', 60, 5, 7),
+    (1, '2017-3-13', 10, 151, 8, 8, 'swimming', 45, 7, 8),
+    (1, '2017-3-14', 6, 150, 9, 9, NULL, NULL, NULL, 8);
+
+COMMIT;
+
+-- INSERT INTO stats (userID, entryDate, waterIntake, weightPounds, sleepAmount, sleepQuality, exerciseType, exerciseLength, exerciseIntensity, overallFeeling) VALUES (1, '2017-3-12', 8, 150, 7, 5, 'biking', 60, 5, 7)

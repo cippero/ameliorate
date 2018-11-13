@@ -1,31 +1,20 @@
-const express               = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
-const bodyParser            = require('body-parser');
-const morgan                = require('morgan');
-const cors                  = require('cors');
-const knex                  = require('knex');
-const app                   = express();
+const express                 = require('express');
+const { ApolloServer }        = require('apollo-server-express');
+const { typeDefs, resolvers } = require('./schema');
+const bodyParser              = require('body-parser');
+const morgan                  = require('morgan');
+const cors                    = require('cors');
+const knex                    = require('knex');
+const app                     = express();
 
+
+// PostgreSQL ////////////////////////////////////////////////////
 const db = knex({
 	client: 'pg',
 	connection: process.env.POSTGRES_URI
 });
 
-// GraphQL/Apollo ////////////////////////////////////////////////
-const typeDefs = gql`
-	type Query {
-		hello: String,
-		five: Int
-	}
-`;
-
-const resolvers = {
-	Query: {
-		hello: () => 'Hello world!',
-		five: () => 5
-	}
-};
-
+// GraphQL ///////////////////////////////////////////////////////
 const server = new ApolloServer({ typeDefs, resolvers });
 
 // Middleware ////////////////////////////////////////////////////
@@ -35,7 +24,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes Handling ///////////////////////////////////////////////
-app.get('/', (req, res) => { res.send('Helloooooo')});
+// app.get('/', (req, res) => { res.send('Helloooooo')});
 
 // const testInsertion = (req, res) => {
 // 	db.transaction(trx => {
@@ -60,11 +49,7 @@ app.get('/', (req, res) => { res.send('Helloooooo')});
 // 	res.status(200).json('added user stats info');
 // };
 // app.get('/test', (req, res) => { testInsertion(req, res)});
+
 // Port Setup ////////////////////////////////////////////////////
-const port = 8080;
-app.listen(process.env.PORT || port, () =>
-	console.log(`🚀 Server ready at http://localhost:${process.env.PORT || port}. Access GraphQL at http://localhost:${process.env.PORT || port}${server.graphqlPath}`)
-);
-
-
-// app.listen(process.env.PORT || port, () => console.log(`Listening on port ${process.env.PORT || port}`));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`🚀 Server ready at http://localhost:${process.env.PORT || PORT}`));

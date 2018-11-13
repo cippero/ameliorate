@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { ApolloServer, gql } = require('apollo-server-express');
 
 const sampleUsers = {
 	1: {
@@ -73,10 +73,11 @@ const sampleUsers = {
 			overallfeeling: 6
 		}
 	}
-}
+};
 
 const typeDefs = gql`
 	type Query {
+		me: User,
 		user(id: ID!): User,
 		users: [User!]
 	}
@@ -106,11 +107,15 @@ const typeDefs = gql`
 
 const resolvers = {
 	Query: {
-		// user: (parent, args) => ({
+		me: () => sampleUsers[1],
 		user: (parent, { id }) => sampleUsers[id],
 		users: () => Object.values(sampleUsers)
 	}
+
+	// User: {
+		// fname: parent => parent.fname+parent.lname
+		// fname: user => user.fname+user.lname
+	// }
 };
 
-
-module.exports = { typeDefs, resolvers };
+module.exports = new ApolloServer({ typeDefs, resolvers });

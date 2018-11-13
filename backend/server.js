@@ -1,11 +1,10 @@
-const express                 = require('express');
-const { ApolloServer }        = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schema');
-const bodyParser              = require('body-parser');
-const morgan                  = require('morgan');
-const cors                    = require('cors');
-const knex                    = require('knex');
-const app                     = express();
+const express          = require('express');
+const bodyParser       = require('body-parser');
+const morgan           = require('morgan');
+const cors             = require('cors');
+const knex             = require('knex');
+const apolloServer     = require('./schema');
+const app              = express();
 
 
 // PostgreSQL ////////////////////////////////////////////////////
@@ -14,11 +13,8 @@ const db = knex({
 	connection: process.env.POSTGRES_URI
 });
 
-// GraphQL ///////////////////////////////////////////////////////
-const server = new ApolloServer({ typeDefs, resolvers });
-
 // Middleware ////////////////////////////////////////////////////
-server.applyMiddleware({ app });
+apolloServer.applyMiddleware({ app });
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json());

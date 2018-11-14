@@ -1,16 +1,16 @@
-const express          = require('express');
-const bodyParser       = require('body-parser');
-const morgan           = require('morgan');
-const cors             = require('cors');
-const knex             = require('knex');
-const apolloServer     = require('./schema');
-const app              = express();
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
+const knex = require('knex');
+const apolloServer = require('./schema');
 
+const app = express();
 
 // PostgreSQL ////////////////////////////////////////////////////
 const db = knex({
-	client: 'pg',
-	connection: process.env.POSTGRES_URI
+  client: 'pg',
+  connection: process.env.POSTGRES_URI,
 });
 
 // Middleware ////////////////////////////////////////////////////
@@ -48,4 +48,6 @@ app.use(bodyParser.json());
 
 // Port Setup ////////////////////////////////////////////////////
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`🚀 Server ready at http://localhost:${process.env.PORT || PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server ready at http://localhost:${process.env.PORT || PORT}`)
+);

@@ -118,4 +118,4 @@ const resolvers = {
 	// }
 };
 
-module.exports = new ApolloServer({ typeDefs, resolvers });
+module.exports = new ApolloServer({ typeDefs, resolvers, context: { me: sampleUsers[1] } });

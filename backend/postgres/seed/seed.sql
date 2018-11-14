@@ -34,10 +34,11 @@ COMMIT;
 BEGIN TRANSACTION;
 
 INSERT INTO stats 
-(userid, entrydate, waterintake, weightpounds, sleepamount, sleepquality, exercisetype, exerciselength, exerciseintensity, overallfeeling) 
-VALUES
-    (1, '2017-3-12', 8, 150, 7, 5, 'biking', 60, 5, 7),
-    (1, '2017-3-13', 10, 151, 8, 8, 'swimming', 45, 7, 8),
-    (1, '2017-3-14', 6, 150, 9, 9, NULL, NULL, NULL, 8);
+(entryid, userid, entrydate, waterintake, weightpounds, sleepamount, sleepquality, 
+exercisetype, exerciselength, exerciseintensity, overallfeeling) VALUES
+    (DEFAULT, 1, '2017-3-12', 8, 150, 7, 5, 'biking', 60, 5, 7),
+    (DEFAULT, 1, '2017-3-13', 10, 151, 8, 8, 'swimming', 45, 7, 8),
+    (DEFAULT, 1, '2017-3-14', 6, 153, 9, 9, NULL, NULL, NULL, 8),
+    (DEFAULT, 2, '2017-5-16', 9, 172, NULL, 9, NULL, 30, 2, 6);
 
 COMMIT;

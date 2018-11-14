@@ -93,6 +93,7 @@ const typeDefs = gql`
 
   type UserStats {
     userid: ID
+    entryid: ID
     entrydate: String
     waterintake: Int
     weightpounds: Int

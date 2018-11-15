@@ -2,16 +2,18 @@ BEGIN TRANSACTION;
 
 CREATE TABLE stats (
     -- PersonID int FOREIGN KEY REFERENCES Persons(PersonID)
-    userid INT REFERENCES users(id),
-    entrydte TIMESTAMP NOT NULL,
+    entryid SERIAL,
+    userid INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    entrydate TIMESTAMP NOT NULL,
     waterintake INT,
     weightpounds INT,
     sleepamount INT,
-    sleepquality INT CHECK (sleepQuality=NULL OR sleepAmount IS NOT NULL),
+    sleepquality INT, --CHECK (sleepquality=NULL OR sleepamount IS NOT NULL),
     exercisetype VARCHAR(50),
-    exerciselength INT CHECK (exerciseLength=NULL OR exerciseType IS NOT NULL),
-    exerciseintensity INT CHECK (exerciseIntensity=NULL OR exerciseType IS NOT NULL),
-    overallfeeling INT
+    exerciselength INT, -- CHECK (exerciselength=NULL OR exercisetype IS NOT NULL),
+    exerciseintensity INT, -- CHECK (exerciseintensity=NULL OR exercisetype IS NOT NULL),
+    overallfeeling INT,
+    PRIMARY KEY (entryid,userid)
 );
 
 COMMIT;

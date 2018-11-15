@@ -75,15 +75,31 @@ const sampleUsers = {
   },
 };
 
+const messages = {
+  1: {
+    id: '1',
+    userid: '1',
+    text: 'Hello World',
+  },
+  2: {
+    id: '2',
+    userid: '2',
+    text: 'By World',
+  },
+};
+
 const typeDefs = gql`
   type Query {
     me: User
     user(id: ID!): User
     users: [User!]
+
+    message(id: ID!): Message!
+    messages: [Message!]!
   }
 
   type User {
-    id: ID
+    id: ID!
     fname: String
     lname: String
     email: String
@@ -92,8 +108,8 @@ const typeDefs = gql`
   }
 
   type UserStats {
-    userid: ID
-    entryid: ID
+    userid: ID!
+    entryid: ID!
     entrydate: String
     waterintake: Int
     weightpounds: Int
@@ -104,6 +120,12 @@ const typeDefs = gql`
     exerciseintensity: Int
     overallfeeling: Int
   }
+
+  type Message {
+    id: ID!
+    text: String!
+    user: User!
+  }
 `;
 
 const resolvers = {
@@ -111,6 +133,12 @@ const resolvers = {
     me: (parent, args, { me }) => me,
     user: (parent, { id }) => sampleUsers[id],
     users: () => Object.values(sampleUsers),
+    message: (parent, { id }) => messages[id],
+    messages: () => Object.values(messages),
+  },
+
+  Message: {
+    user: message => sampleUsers[message.userid],
   },
 
   // User: {

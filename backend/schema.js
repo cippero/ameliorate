@@ -127,6 +127,20 @@ const typeDefs = gql`
   }
 `;
 
+// type UserStats {
+// 	userid: ID
+// 	entryid: ID
+// 	entrydate: String
+// 	waterintake: Int
+// 	weightpounds: Int
+// 	sleepamount: Int
+// 	sleepquality: Int
+// 	exercisetype: String
+// 	exerciselength: Int
+// 	exerciseintensity: Int
+// 	overallfeeling: Int
+// }
+
 const resolvers = {
   Query: {
     me: (parent, args, { me }) => me,

@@ -18,9 +18,10 @@ const sampleUsers = {
       exerciseintensity: 7,
       overallfeeling: 6,
     },
+    messageIds: ['1'],
   },
   2: {
-    id: '1',
+    id: '2',
     fname: 'Bob',
     lname: 'Murphy',
     email: 'eddie@murphy.com',
@@ -36,9 +37,10 @@ const sampleUsers = {
       exerciseintensity: 7,
       overallfeeling: 6,
     },
+    messageIds: ['2'],
   },
   3: {
-    id: '1',
+    id: '3',
     fname: 'Edgar',
     lname: 'Murphy',
     email: 'eddie@murphy.com',
@@ -54,9 +56,10 @@ const sampleUsers = {
       exerciseintensity: 7,
       overallfeeling: 6,
     },
+    messageIds: ['3', '4'],
   },
   4: {
-    id: '1',
+    id: '4',
     fname: 'Shrek',
     lname: 'Murphy',
     email: 'eddie@murphy.com',
@@ -72,6 +75,7 @@ const sampleUsers = {
       exerciseintensity: 7,
       overallfeeling: 6,
     },
+    messageIds: ['1'],
   },
 };
 
@@ -86,6 +90,16 @@ const messages = {
     userid: '2',
     text: 'By World',
   },
+  3: {
+    id: '3',
+    userid: '3',
+    text: 'Shalom',
+  },
+  4: {
+    id: '4',
+    userid: '4',
+    text: 'bla bla bla',
+  },
 };
 
 const typeDefs = gql`
@@ -93,7 +107,6 @@ const typeDefs = gql`
     me: User
     user(id: ID!): User
     users: [User!]
-
     message(id: ID!): Message!
     messages: [Message!]!
   }
@@ -104,21 +117,7 @@ const typeDefs = gql`
     lname: String
     email: String
     joined: String
-    stats: UserStats
-  }
-
-  type UserStats {
-    userid: ID!
-    entryid: ID!
-    entrydate: String
-    waterintake: Int
-    weightpounds: Int
-    sleepamount: Int
-    sleepquality: Int
-    exercisetype: String
-    exerciselength: Int
-    exerciseintensity: Int
-    overallfeeling: Int
+    messages: [Message!]
   }
 
   type Message {
@@ -141,10 +140,12 @@ const resolvers = {
     user: message => sampleUsers[message.userid],
   },
 
-  // User: {
-  // fname: parent => parent.fname+parent.lname
-  // fname: user => user.fname+user.lname
-  // }
+  User: {
+    messages: user =>
+      Object.values(messages).filter(message =>
+        user.messageIds.includes(message.id)
+      ),
+  },
 };
 
 module.exports = new ApolloServer({

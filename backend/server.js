@@ -3,7 +3,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const knex = require('knex');
-const apolloServer = require('./schema');
+const { ApolloServer } = require('apollo-server-express');
+const schema = require('./schema');
+const resolvers = require('./resolvers');
+const models = require('./sampleData');
 
 const app = express();
 
@@ -14,7 +17,12 @@ const db = knex({
 });
 
 // Middleware ////////////////////////////////////////////////////
-apolloServer.applyMiddleware({ app });
+const server = new ApolloServer({
+  typeDefs: schema,
+  resolvers,
+  context: { me: models.users[2], models },
+});
+server.applyMiddleware({ app });
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json());

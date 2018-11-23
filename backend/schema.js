@@ -1,6 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server-express');
+const uuid4 = require('uuid/v4');
 
-const sampleUsers = {
+const users = {
   1: {
     id: '1',
     fname: 'Eddie',
@@ -79,7 +80,7 @@ const sampleUsers = {
   },
 };
 
-const messages = {
+let messages = {
   1: {
     id: '1',
     userid: '1',
@@ -107,8 +108,14 @@ const typeDefs = gql`
     me: User
     user(id: ID!): User
     users: [User!]
+
     message(id: ID!): Message!
     messages: [Message!]!
+  }
+
+  type Mutation {
+    createMessage(text: String!): Message!
+    deleteMessage(id: ID!): Boolean!
   }
 
   type User {
@@ -144,14 +151,29 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     me: (parent, args, { me }) => me,
-    user: (parent, { id }) => sampleUsers[id],
-    users: () => Object.values(sampleUsers),
+    user: (parent, { id }) => users[id],
+    users: () => Object.values(users),
     message: (parent, { id }) => messages[id],
     messages: () => Object.values(messages),
   },
 
+  Mutation: {
+    createMessage: (parent, { text }, { me }) => {
+      const id = uuid4();
+      const message = { id, text, userid: me.id };
+      users[me.id].messageIds.push(id);
+      messages[id] = message;
+      return message;
+    },
+    deleteMessage: (parent, { id }) => {
+      const { [id]: message, ...otherMessages } = messages;
+      messages = otherMessages;
+      return !!message;
+    },
+  },
+
   Message: {
-    user: message => sampleUsers[message.userid],
+    user: message => users[message.userid],
   },
 
   User: {
@@ -165,5 +187,5 @@ const resolvers = {
 module.exports = new ApolloServer({
   typeDefs,
   resolvers,
-  context: { me: sampleUsers[2] },
+  context: { me: users[2] },
 });
